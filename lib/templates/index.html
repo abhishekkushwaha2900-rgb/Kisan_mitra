@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kisan Mitra AI Assistant</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef7ee;
+            margin: 0;
+            padding: 0;
+        }
+
+        .chat-container {
+            width: 90%;
+            max-width: 700px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-header {
+            background: #2e7d32;
+            color: white;
+            padding: 20px;
+        }
+
+        .chat-messages {
+            height: 400px;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .chat-input-area {
+            display: flex;
+            padding: 15px;
+            gap: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        #userInput {
+            flex: 1;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #2e7d32;
+            border-radius: 25px;
+            outline: none;
+            background: white;
+            color: black;
+        }
+
+        #userInput:focus {
+            border-color: #1b5e20;
+        }
+
+        #sendButton {
+            padding: 15px 25px;
+            background: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="chat-container">
+
+        <div class="chat-header">
+            <h1>🤖 Kisan Mitra AI Assistant</h1>
+            <p>Smart Farming Assistant for Farmers 🌾</p>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+
+            <p>
+                🤖 Namaste! 🙏
+                <br><br>
+                Main Kisan Mitra AI Assistant hoon.
+                <br><br>
+                Main aapki kheti se judi problems mein madad kar sakta hoon. 🌱
+            </p>
+
+        </div>
+
+        <div class="chat-input-area">
+
+            <input
+                type="text"
+                id="userInput"
+                placeholder="Apna sawal yahan likhein..."
+            >
+
+            <button
+                id="sendButton"
+                onclick="sendMessage()">
+                🚀 Send
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function sendMessage() {
+
+            let input =
+                document.getElementById("userInput");
+
+            let message =
+                input.value.trim();
+
+            if (message === "") {
+                alert("Please apna sawal likhiye.");
+                return;
+            }
+
+            let chat =
+                document.getElementById("chatMessages");
+
+            chat.innerHTML +=
+                "<p>👨‍🌾 <b>You:</b> " +
+                message +
+                "</p>";
+
+            input.value = "";
+
+            chat.innerHTML +=
+                "<p>🤖 <b>AI:</b> Aapka sawal receive ho gaya hai. 🌾</p>";
+
+        }
+
+    </script>
+
+</body>
+
+</html>
