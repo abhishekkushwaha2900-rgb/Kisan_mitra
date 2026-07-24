@@ -1,147 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
+<script>
+async function sendMessage() {
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    const input = document.getElementById("userInput");
+    const message = input.value.trim();
 
-    <title>Kisan Mitra AI Assistant</title>
+    if (message === "") return;
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #eef7ee;
-            margin: 0;
-            padding: 0;
-        }
+    const chat = document.getElementById("chatMessages");
 
-        .chat-container {
-            width: 90%;
-            max-width: 700px;
-            margin: 50px auto;
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-        }
+    chat.innerHTML += `<p>👨‍🌾 <b>You:</b> ${message}</p>`;
+    input.value = "";
 
-        .chat-header {
-            background: #2e7d32;
-            color: white;
-            padding: 20px;
-        }
+    try {
 
-        .chat-messages {
-            height: 400px;
-            padding: 20px;
-            overflow-y: auto;
-        }
+        const response = await fetch("/ask", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message: message
+            })
+        });
 
-        .chat-input-area {
-            display: flex;
-            padding: 15px;
-            gap: 10px;
-            border-top: 1px solid #ddd;
-        }
+        const data = await response.json();
 
-        #userInput {
-            flex: 1;
-            padding: 15px;
-            font-size: 16px;
-            border: 2px solid #2e7d32;
-            border-radius: 25px;
-            outline: none;
-            background: white;
-            color: black;
-        }
+        chat.innerHTML += `<p>🤖 <b>AI:</b> ${data.reply}</p>`;
 
-        #userInput:focus {
-            border-color: #1b5e20;
-        }
+        chat.scrollTop = chat.scrollHeight;
 
-        #sendButton {
-            padding: 15px 25px;
-            background: #2e7d32;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-        }
-    </style>
-</head>
+    } catch (error) {
 
-<body>
+        chat.innerHTML += `<p>🤖 <b>AI:</b> Server se connection nahi ho paya.</p>`;
 
-    <div class="chat-container">
+    }
 
-        <div class="chat-header">
-            <h1>🤖 Kisan Mitra AI Assistant</h1>
-            <p>Smart Farming Assistant for Farmers 🌾</p>
-        </div>
+}
 
-        <div class="chat-messages" id="chatMessages">
-
-            <p>
-                🤖 Namaste! 🙏
-                <br><br>
-                Main Kisan Mitra AI Assistant hoon.
-                <br><br>
-                Main aapki kheti se judi problems mein madad kar sakta hoon. 🌱
-            </p>
-
-        </div>
-
-        <div class="chat-input-area">
-
-            <input
-                type="text"
-                id="userInput"
-                placeholder="Apna sawal yahan likhein..."
-            >
-
-            <button
-                id="sendButton"
-                onclick="sendMessage()">
-                🚀 Send
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <script>
-
-        function sendMessage() {
-
-            let input =
-                document.getElementById("userInput");
-
-            let message =
-                input.value.trim();
-
-            if (message === "") {
-                alert("Please apna sawal likhiye.");
-                return;
-            }
-
-            let chat =
-                document.getElementById("chatMessages");
-
-            chat.innerHTML +=
-                "<p>👨‍🌾 <b>You:</b> " +
-                message +
-                "</p>";
-
-            input.value = "";
-
-            chat.innerHTML +=
-                "<p>🤖 <b>AI:</b> Aapka sawal receive ho gaya hai. 🌾</p>";
-
-        }
-
-    </script>
-
-</body>
-
-</html>
+document.getElementById("userInput").addEventListener("keypress", function(e){
+    if(e.key==="Enter"){
+        sendMessage();
+    }
+});
+</script>
